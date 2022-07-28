@@ -31,7 +31,7 @@ public class HelloJerseyController {
     @GET
     @Path("/async")
     @Produces(APPLICATION_JSON)
-    public void greetingAsync(@Suspended final AsyncResponse asyncResponse) {
+    public void asyncGreeting(@Suspended final AsyncResponse asyncResponse) {
         new Thread(() -> {
             User user = userRetrievalService.retrieveUser("Jersey");
             asyncResponse.resume(user);
