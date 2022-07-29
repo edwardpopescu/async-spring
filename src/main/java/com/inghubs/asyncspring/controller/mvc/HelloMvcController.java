@@ -20,7 +20,7 @@ public class HelloMvcController {
     private final UserRetrievalService userRetrievalService;
 
     @GetMapping(value = "/",  produces = APPLICATION_JSON_VALUE)
-    public final User greeting() {
+    public User greeting() {
         return userRetrievalService.retrieveUser("MVC");
     }
 

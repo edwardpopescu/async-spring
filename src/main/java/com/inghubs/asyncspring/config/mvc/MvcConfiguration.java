@@ -21,8 +21,8 @@ public class MvcConfiguration implements WebMvcConfigurer {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         final int numOfAvailableProcessors = Runtime.getRuntime().availableProcessors();
         log.info("available processors {}", numOfAvailableProcessors);
-        executor.setCorePoolSize(numOfAvailableProcessors * 10);
-        executor.setMaxPoolSize(numOfAvailableProcessors * 100);
+        executor.setCorePoolSize(numOfAvailableProcessors * 20);
+        executor.setMaxPoolSize(numOfAvailableProcessors * 180);
         executor.setQueueCapacity(10000);
         executor.setThreadNamePrefix("MvcAsyncThread-");
         executor.initialize();

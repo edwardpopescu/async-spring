@@ -11,7 +11,7 @@ public class UserRetrievalService {
 
     public User retrieveUser(String source) {
         try {
-            Thread.sleep(1000L);
+            Thread.sleep(50L);
         } catch (InterruptedException e) {
             log.error("Exception during thread sleep", e);
             throw new RuntimeException(e);
