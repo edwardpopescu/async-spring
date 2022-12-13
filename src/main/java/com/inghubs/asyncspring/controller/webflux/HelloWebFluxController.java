@@ -17,6 +17,6 @@ public class HelloWebFluxController {
 
     @GetMapping("webflux")
     public Mono<User> greeting() {
-        return Mono.just(userRetrievalService.retrieveUser("Webflux"));
+        return userRetrievalService.retrieveUser("Webflux");
     }
 }
