@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
 @RequestMapping("hello")
 @RequiredArgsConstructor
@@ -15,8 +17,8 @@ public class HelloWebFluxController {
 
     private final UserRetrievalService userRetrievalService;
 
-    @GetMapping("webflux")
+    @GetMapping(value = "webflux", produces = APPLICATION_JSON_VALUE)
     public Mono<User> greeting() {
-        return userRetrievalService.retrieveUser("Webflux");
+        return userRetrievalService.retrieveUser();
     }
 }
