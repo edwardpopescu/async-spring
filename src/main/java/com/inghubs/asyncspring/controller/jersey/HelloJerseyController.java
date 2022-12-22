@@ -25,7 +25,7 @@ public class HelloJerseyController {
     @Path("/")
     @Produces(APPLICATION_JSON)
     public Response greeting() {
-        return Response.ok(userRetrievalService.retrieveUser("Jersey")).build();
+        return Response.ok(userRetrievalService.retrieveUser()).build();
     }
 
     @GET
@@ -33,7 +33,7 @@ public class HelloJerseyController {
     @Produces(APPLICATION_JSON)
     public void asyncGreeting(@Suspended final AsyncResponse asyncResponse) {
         new Thread(() -> {
-            User user = userRetrievalService.retrieveUser("Jersey");
+            User user = userRetrievalService.retrieveUser();
             asyncResponse.resume(user);
         }).start();
     }
