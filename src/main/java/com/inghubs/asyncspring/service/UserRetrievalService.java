@@ -1,22 +1,45 @@
 package com.inghubs.asyncspring.service;
 
 import com.inghubs.asyncspring.model.User;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
+import org.springframework.web.client.AsyncRestTemplate;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.concurrent.CompletableFuture;
 
 
 @Service
-@Slf4j
 public class UserRetrievalService {
 
-    public User retrieveUser(String source) {
-        try {
-            Thread.sleep(50L);
-        } catch (InterruptedException e) {
-            log.error("Exception during thread sleep", e);
-            throw new RuntimeException(e);
-        }
-        return new User(source + " user");
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    private final AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
+
+    public User retrieveUser() {
+        return restTemplate.getForObject("http://localhost:8080/hello/wiremock", User.class);
+    }
+
+    public CompletableFuture<User> retrieveUserAsync() {
+        return toCompletableFuture(asyncRestTemplate.getForEntity("http://localhost:8080/hello/wiremock", User.class));
+    }
+
+    public CompletableFuture<User> toCompletableFuture(ListenableFuture<ResponseEntity<User>> listenableFuture) {
+        final CompletableFuture<User> completableFuture = new CompletableFuture<>();
+        listenableFuture.addCallback(new ListenableFutureCallback<>() {
+            @Override
+            public void onFailure(Throwable e) {
+                completableFuture.completeExceptionally(e);
+            }
+
+            @Override
+            public void onSuccess(ResponseEntity<User> result) {
+                completableFuture.complete(result.getBody());
+            }
+        });
+        return completableFuture;
     }
 
 }

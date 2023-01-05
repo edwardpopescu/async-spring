@@ -20,14 +20,13 @@ public class HelloMvcController {
     private final UserRetrievalService userRetrievalService;
 
     @GetMapping(value = "/",  produces = APPLICATION_JSON_VALUE)
-    public User greeting() {
-        return userRetrievalService.retrieveUser("MVC");
+    public User greeting() {return userRetrievalService.retrieveUser();
     }
 
     @GetMapping(value = "async",  produces = APPLICATION_JSON_VALUE)
     @Async("asyncExecutor")
     public CompletableFuture<User> asyncGreeting() {
-        return CompletableFuture.supplyAsync(() -> userRetrievalService.retrieveUser("MVC"));
+        return userRetrievalService.retrieveUserAsync();
     }
 
 }
