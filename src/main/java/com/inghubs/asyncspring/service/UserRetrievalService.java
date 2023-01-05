@@ -15,13 +15,12 @@ import javax.ws.rs.core.MediaType;
 @Slf4j
 public class UserRetrievalService {
 
-    Client client = ClientBuilder.newClient();
-    WebTarget wiremockTarget
+    private final Client client = ClientBuilder.newClient();
+    private final WebTarget wiremockTarget
             = client.target("http://localhost:8080/hello/wiremock");
 
     public User retrieveUser() {
-        Invocation.Builder invocationBuilder
-                = wiremockTarget.request(MediaType.APPLICATION_JSON);
+        Invocation.Builder invocationBuilder = wiremockTarget.request(MediaType.APPLICATION_JSON);
         return invocationBuilder.get(User.class);
     }
 
