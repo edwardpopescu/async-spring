@@ -11,12 +11,12 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class UserRetrievalService {
 
-    WebClient client = WebClient.create("http://localhost:8080/hello/wiremock");
-
+    private final WebClient client = WebClient.create("http://localhost:8080/hello/wiremock");
 
     public Mono<User> retrieveUser() {
         return client.get()
                 .retrieve()
                 .bodyToMono(User.class);
     }
+
 }
